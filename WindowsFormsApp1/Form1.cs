@@ -89,13 +89,13 @@ namespace WindowsFormsApp1
                 case Type.Rotate:
                     rotatePoint = new Point(X, Y);
                     //g.FillRectangle(new SolidBrush(Color.Red), X, Y, 3, 3);
-                    Scale();
+                    turn();
                     EnableButtons();
                     break;
                 case Type.Scale:
                     rotatePoint = new Point(X, Y);
                     //g.FillRectangle(new SolidBrush(Color.Red), X, Y, 3, 3);
-                    turn();
+                    Scale();
                     EnableButtons();
                     break;
                 case Type.Point:
