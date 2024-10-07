@@ -456,7 +456,7 @@ namespace WindowsFormsApp1
         }
         private void scalePoint(object sender, EventArgs e)
         {
-            type = Type.Rotate;
+            type = Type.Scale;
             unEnableButtons();
         }
 
