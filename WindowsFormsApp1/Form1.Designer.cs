@@ -150,7 +150,7 @@
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(582, 207);
-            this.button6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(167, 42);
             this.button6.TabIndex = 11;
@@ -161,7 +161,7 @@
             // button7
             // 
             this.button7.Location = new System.Drawing.Point(769, 207);
-            this.button7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(167, 42);
             this.button7.TabIndex = 12;
@@ -172,7 +172,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(651, 179);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(99, 22);
             this.textBox1.TabIndex = 13;
@@ -190,7 +190,7 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(604, 273);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(129, 22);
             this.textBox2.TabIndex = 15;
@@ -198,7 +198,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(803, 271);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(129, 22);
             this.textBox3.TabIndex = 16;
@@ -226,7 +226,7 @@
             // button8
             // 
             this.button8.Location = new System.Drawing.Point(585, 304);
-            this.button8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button8.Margin = new System.Windows.Forms.Padding(2);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(229, 54);
             this.button8.TabIndex = 19;
@@ -237,7 +237,7 @@
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(826, 304);
-            this.button9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button9.Margin = new System.Windows.Forms.Padding(2);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(224, 54);
             this.button9.TabIndex = 20;
@@ -249,11 +249,12 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(757, 134);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(193, 24);
             this.comboBox1.TabIndex = 21;
             this.comboBox1.Text = "Выбрать полигон";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // button10
             // 
