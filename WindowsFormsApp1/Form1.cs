@@ -158,61 +158,6 @@ namespace WindowsFormsApp1
             pictureBox1.Refresh();
         }
 
-        /*private void ReDraw(int X, int Y, int xFirst, int yFirst)
-        {
-            var x = lastPoint.X;
-            var y = lastPoint.Y;
-
-            switch (type)
-            {
-                case Type.Point:
-                    g.FillRectangle(new SolidBrush(Color.Black), X, Y, 3, 3);
-                    break;
-
-                case Type.Edge:
-                    g.FillRectangle(new SolidBrush(Color.Black), X, Y, 3, 3);
-
-                    if (!first)
-                    {
-                        g.DrawLine(new Pen(Color.Black, 1), X, Y, x, y);
-                        first = true;
-                        break;
-                    }
-
-                    first = false;
-                    break;
-
-                case Type.Polygon:
-                    if (first)
-                    {
-                        g.FillRectangle(new SolidBrush(Color.Black), X, Y, 3, 3);
-                    }
-                    else
-                    {
-                        if (getDistance(polygons.Last().points[0], new Point(X, Y)) < 5)
-                        {
-                            g.DrawLine(new Pen(Color.Black, 1), polygons.Last().points[0].X, polygons.Last().points[0].Y, x, y);
-
-                            first = true;
-                            break;
-                        }
-                        else
-                        {
-                            g.FillRectangle(new SolidBrush(Color.Black), X, Y, 3, 3);
-                            g.DrawLine(new Pen(Color.Black, 1), X, Y, x, y);
-                        }
-
-                        break;
-                    }
-                    first = false;
-                    break;
-            }
-
-            lastPoint = new Point(X, Y);
-            pictureBox1.Refresh();
-        }
-
-*/
         // кнопки определяющие тип рисования
         private void clearButton(object sender, EventArgs e)
         {
@@ -499,6 +444,11 @@ namespace WindowsFormsApp1
             
             matrixApplication(transformationMatrix, polygon);
             g.FillRectangle(new SolidBrush(Color.Red), rotatePoint.X, rotatePoint.Y, 3, 3);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
         }
     }
 };
