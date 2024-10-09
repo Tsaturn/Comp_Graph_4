@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace WindowsFormsApp1
@@ -23,6 +24,7 @@ namespace WindowsFormsApp1
         private bool drawing = false;
         private double[,] transformationMatrix;
         private Point rotatePoint;
+        private List<Tuple<PointF, PointF>> edges = new List<Tuple<PointF, PointF>>();
 
         enum Type
         {
@@ -116,6 +118,10 @@ namespace WindowsFormsApp1
                         polygons.Last().points.Add(lastPoint);
                         polygons.Last().points.Add(new Point(X, Y));
                         g.DrawLine(new Pen(Color.Black, 1), X, Y, x, y);
+
+                        edges.Add(new Tuple<PointF, PointF>(new PointF(lastPoint.X, lastPoint.Y), new PointF(X, Y)));
+                        comboBox2.Items.Add($"Edge ({lastPoint.X}, {lastPoint.Y}) -> ({X}, {Y})");
+
                         drawing = false;
                         first = true;
                         break;
@@ -166,6 +172,7 @@ namespace WindowsFormsApp1
             polygons.Clear();
             comboBox1.Items.Clear();
             first = true;
+            comboBox2.Items.Clear();
         }
 
         private void createPoint(object sender, EventArgs e)
@@ -450,8 +457,26 @@ namespace WindowsFormsApp1
         {
 
         }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedIndex = comboBox2.SelectedIndex;
+            if (selectedIndex >= 0 && selectedIndex < edges.Count)
+            {
+                var selectedEdge = edges[selectedIndex];
+            }
+
+        }
+       
+        private void button10_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+        }
+
     }
 };
 
 
-  
