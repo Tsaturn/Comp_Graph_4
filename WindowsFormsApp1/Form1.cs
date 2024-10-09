@@ -176,6 +176,7 @@ namespace WindowsFormsApp1
             g.Clear(Color.White);
             pictureBox1.Invalidate();
             polygons.Clear();
+            closedPolygons.Clear();
             comboBox1.Items.Clear();
             first = true;
         }
