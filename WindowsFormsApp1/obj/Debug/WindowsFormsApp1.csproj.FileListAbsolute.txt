@@ -18,13 +18,3 @@ C:\Users\chuev\source\repos\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsForms
 C:\Users\chuev\source\repos\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\chuev\source\repos\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\chuev\source\repos\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
-C:\Users\anast\OneDrive\Рабочий стол\4 курс\компьютерная графика\lab2\Comp_Graph_4\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

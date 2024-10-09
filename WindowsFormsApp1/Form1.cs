@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace WindowsFormsApp1
@@ -24,11 +23,12 @@ namespace WindowsFormsApp1
         private bool drawing = false;
         private double[,] transformationMatrix;
         private Point rotatePoint;
-        private List<Tuple<PointF, PointF>> edges = new List<Tuple<PointF, PointF>>();
+        private Point checkPoint;
+        private Polygon checkPolygon;
 
         enum Type
         {
-            Point, Edge, Polygon, Rotate, Scale
+            Point, Edge, Polygon, Rotate, Scale, CheckBelong
         }
 
         private class Polygon
@@ -88,6 +88,16 @@ namespace WindowsFormsApp1
 
             switch (type)
             {
+                case Type.CheckBelong:
+                    checkPoint = new Point(X, Y);
+
+                    if (point_in_Polygon())
+                        g.FillRectangle(new SolidBrush(Color.Green), checkPoint.X, checkPoint.Y, 3, 3);
+                    else
+                        g.FillRectangle(new SolidBrush(Color.Red), checkPoint.X, checkPoint.Y, 3, 3);
+
+                    EnableButtons();
+                    break;
                 case Type.Rotate:
                     rotatePoint = new Point(X, Y);
                     //g.FillRectangle(new SolidBrush(Color.Red), X, Y, 3, 3);
@@ -118,10 +128,6 @@ namespace WindowsFormsApp1
                         polygons.Last().points.Add(lastPoint);
                         polygons.Last().points.Add(new Point(X, Y));
                         g.DrawLine(new Pen(Color.Black, 1), X, Y, x, y);
-
-                        edges.Add(new Tuple<PointF, PointF>(new PointF(lastPoint.X, lastPoint.Y), new PointF(X, Y)));
-                        comboBox2.Items.Add($"Edge ({lastPoint.X}, {lastPoint.Y}) -> ({X}, {Y})");
-
                         drawing = false;
                         first = true;
                         break;
@@ -170,9 +176,9 @@ namespace WindowsFormsApp1
             g.Clear(Color.White);
             pictureBox1.Invalidate();
             polygons.Clear();
+            closedPolygons.Clear();
             comboBox1.Items.Clear();
             first = true;
-            comboBox2.Items.Clear();
         }
 
         private void createPoint(object sender, EventArgs e)
@@ -215,7 +221,7 @@ namespace WindowsFormsApp1
             for (int i = 0; i < polygonToTransform.points.Count; i++)
             {
                 double[,] point = new double[,] { { polygonToTransform.points[i].X, polygonToTransform.points[i].Y, 1 } };
-                double[,] result = matrix_multiplication(point, m); 
+                double[,] result = matrix_multiplication(point, m);
                 newPolygon.points.Add(new Point(Convert.ToInt32(Math.Round(result[0, 0])), Convert.ToInt32(Math.Round(result[0, 1]))));
             }
 
@@ -304,37 +310,37 @@ namespace WindowsFormsApp1
                 }
             }
         }
-            
+
         private void turnAroundCenter(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex == -1)
                 return;
             var polygon = closedPolygons[comboBox1.SelectedIndex];
             double p;
-                try
-                {
-                    p = System.Convert.ToDouble(textBox1.Text) * Math.PI / 180;
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("Пожалуйста, введите числовое значение для угла");
-                    p = 0;
-                }
+            try
+            {
+                p = System.Convert.ToDouble(textBox1.Text) * Math.PI / 180;
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Пожалуйста, введите числовое значение для угла");
+                p = 0;
+            }
 
-                double cos = Math.Cos(p);
-                double sin = Math.Sin(p);
+            double cos = Math.Cos(p);
+            double sin = Math.Sin(p);
 
-               
-                double centerX = polygon.points.Average(point => point.X);
-                double centerY = polygon.points.Average(point => point.Y);
 
-                transformationMatrix = new double[,] {
+            double centerX = polygon.points.Average(point => point.X);
+            double centerY = polygon.points.Average(point => point.Y);
+
+            transformationMatrix = new double[,] {
                     { cos, sin, 0 },
                     { -sin, cos, 0 },
                     { centerX * (1 - cos) + centerY * sin, centerY * (1 - cos) - centerX * sin, 1 } };
-                
-                matrixApplication(transformationMatrix, polygon);
-        }                
+
+            matrixApplication(transformationMatrix, polygon);
+        }
         private void turnAroundPoint(object sender, EventArgs e)
         {
             type = Type.Rotate;
@@ -379,21 +385,21 @@ namespace WindowsFormsApp1
             double scaleX, scaleY;
             try
             {
-                scaleX = System.Convert.ToDouble(textBox2.Text); 
+                scaleX = System.Convert.ToDouble(textBox2.Text);
             }
             catch (FormatException)
             {
                 MessageBox.Show("Пожалуйста, введите числовое значение для коэффициента масштабирования");
-                scaleX = 1; 
+                scaleX = 1;
             }
             try
             {
-                scaleY = System.Convert.ToDouble(textBox3.Text); 
+                scaleY = System.Convert.ToDouble(textBox3.Text);
             }
             catch (FormatException)
             {
                 MessageBox.Show("Пожалуйста, введите числовое значение для коэффициента масштабирования");
-                scaleY = 1; 
+                scaleY = 1;
             }
 
             double centerX = polygon.points.Average(point => point.X);
@@ -431,12 +437,12 @@ namespace WindowsFormsApp1
             catch (FormatException)
             {
                 MessageBox.Show("Пожалуйста, введите числовое значение для коэффициента масштабирования по оси X");
-                scaleX = 1; 
+                scaleX = 1;
             }
 
             try
             {
-                scaleY = System.Convert.ToDouble(textBox3.Text); 
+                scaleY = System.Convert.ToDouble(textBox3.Text);
             }
             catch (FormatException)
             {
@@ -448,35 +454,49 @@ namespace WindowsFormsApp1
             { scaleX, 0, 0 },
             { 0, scaleY, 0 },
             { (-x) * scaleX + x, (-y) * scaleY + y, 1 } };
-            
+
             matrixApplication(transformationMatrix, polygon);
             g.FillRectangle(new SolidBrush(Color.Red), rotatePoint.X, rotatePoint.Y, 3, 3);
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
+            type = Type.CheckBelong;
 
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selectedIndex = comboBox2.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < edges.Count)
+            // Проверка, выбрал ли пользователь полигон
+            if (comboBox1.SelectedItem == null)
             {
-                var selectedEdge = edges[selectedIndex];
+                MessageBox.Show("Выберите полигон!");
+                return;
             }
 
-        }
-       
-        private void button10_Click(object sender, EventArgs e)
-        {
+            // Получение полигона из ComboBox
+            checkPolygon = closedPolygons[comboBox1.SelectedIndex];
+
+            unEnableButtons();
         }
 
-        private void button12_Click(object sender, EventArgs e)
+        private bool point_in_Polygon()
         {
+            int count = checkPolygon.points.Count;
+            bool result = false;
+            for (int i = 0, j = count - 1; i < count; j = i++)
+            {
+                if ((checkPolygon.points[i].Y > checkPoint.Y) != (checkPolygon.points[j].Y > checkPoint.Y) &&
+                    (checkPoint.X < (checkPolygon.points[j].X - checkPolygon.points[i].X) * (checkPoint.Y - checkPolygon.points[i].Y) / (checkPolygon.points[j].Y - checkPolygon.points[i].Y) + checkPolygon.points[i].X))
+                {
+                    result = !result;
+                }
+            }
+            return result;
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 };
+
 
 
