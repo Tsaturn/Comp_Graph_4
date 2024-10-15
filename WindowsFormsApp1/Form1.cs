@@ -19,11 +19,11 @@ namespace WindowsFormsApp1
         private List<Polygon> polygons = new List<Polygon>();
         private List<Polygon> closedPolygons = new List<Polygon>();
         private Type type = Type.Point;
-        private Point lastPoint;
+        private PointF lastPoint;
         private bool first = true;
         private bool drawing = false;
         private double[,] transformationMatrix;
-        private Point rotatePoint;
+        private PointF rotatePoint;
         private List<Tuple<PointF, PointF>> edges = new List<Tuple<PointF, PointF>>();
 
         enum Type
@@ -34,9 +34,9 @@ namespace WindowsFormsApp1
         private class Polygon
         {
             public Type type;
-            public List<Point> points;
+            public List<PointF> points;
 
-            public Polygon(Type t, List<Point> p)
+            public Polygon(Type t, List<PointF> p)
             {
                 type = t;
                 points = p;
@@ -51,7 +51,7 @@ namespace WindowsFormsApp1
             pictureBox1.MouseMove += pictureBox1_MouseMove;
         }
 
-        private double getDistance(Point p1, Point p2)
+        private double getDistance(PointF p1, PointF p2)
         {
             return Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
         }
@@ -67,7 +67,7 @@ namespace WindowsFormsApp1
             {
                 pictureBox1.Refresh();
 
-                var currentPoint = new Point(e.Location.X, e.Location.Y);
+                var currentPoint = new PointF(e.Location.X, e.Location.Y);
 
                 if (polygons.Last().points.Count > 0 && getDistance(polygons.Last().points[0], currentPoint) < 20)
                 {
@@ -102,7 +102,7 @@ namespace WindowsFormsApp1
                     break;
                 case Type.Point:
                     g.FillRectangle(new SolidBrush(Color.Black), X, Y, 3, 3);
-                    polygons.Add(new Polygon(Type.Point, new List<Point> { new Point(X, Y) }));
+                    polygons.Add(new Polygon(Type.Point, new List<PointF> { new PointF(X, Y) }));
                     break;
 
                 case Type.Edge:
@@ -110,7 +110,7 @@ namespace WindowsFormsApp1
 
                     if (first)
                     {
-                        polygons.Add(new Polygon(Type.Edge, new List<Point> { }));
+                        polygons.Add(new Polygon(Type.Edge, new List<PointF> { }));
                         drawing = true;
                     }
                     if (!first)
@@ -133,7 +133,7 @@ namespace WindowsFormsApp1
                 case Type.Polygon:
                     if (first)
                     {
-                        polygons.Add(new Polygon(Type.Polygon, new List<Point> { }));
+                        polygons.Add(new Polygon(Type.Polygon, new List<PointF> { }));
                         closedPolygons.Add(polygons.Last());
                         comboBox1.Items.Add("Полигон" + closedPolygons.Count());
                         //g.FillRectangle(new SolidBrush(Color.Black), X, Y, 3, 3);
@@ -143,7 +143,7 @@ namespace WindowsFormsApp1
                     {
                         closedPolygons.Last().points.Add(lastPoint);
                         polygons.Last().points.Add(lastPoint);
-                        if (getDistance(polygons.Last().points[0], new Point(X, Y)) < 10)
+                        if (getDistance(polygons.Last().points[0], new PointF(X, Y)) < 10)
                         {
                             g.DrawLine(new Pen(Color.Black, 1), polygons.Last().points[0].X, polygons.Last().points[0].Y, x, y);
                             drawing = false;
@@ -160,7 +160,7 @@ namespace WindowsFormsApp1
                     break;
             }
 
-            lastPoint = new Point(X, Y);
+            lastPoint = new PointF(X, Y);
             pictureBox1.Refresh();
         }
 
@@ -170,6 +170,7 @@ namespace WindowsFormsApp1
             g.Clear(Color.White);
             pictureBox1.Invalidate();
             polygons.Clear();
+            closedPolygons.Clear();
             comboBox1.Items.Clear();
             first = true;
             comboBox2.Items.Clear();
@@ -210,7 +211,7 @@ namespace WindowsFormsApp1
         private void matrixApplication(double[,] m, Polygon polygonToTransform)
         {
             // Преобразуем только один полигон
-            Polygon newPolygon = new Polygon(polygonToTransform.type, new List<Point>());
+            Polygon newPolygon = new Polygon(polygonToTransform.type, new List<PointF>());
 
             for (int i = 0; i < polygonToTransform.points.Count; i++)
             {
@@ -245,7 +246,7 @@ namespace WindowsFormsApp1
                 }
                 if (polygon.type == Type.Point)
                 {
-                    Point lastPoint = polygon.points.Last();
+                    PointF lastPoint = polygon.points.Last();
                     g.FillRectangle(new SolidBrush(Color.Black), (float)lastPoint.X, (float)lastPoint.Y, 3, 3);
                 }
             }
